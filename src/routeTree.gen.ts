@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as StaffRouteImport } from './routes/staff'
 import { Route as TokenRouteImport } from './routes/token'
+import { Route as TrackingRouteImport } from './routes/tracking'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,9 +31,19 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StaffRoute = StaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TokenRoute = TokenRouteImport.update({
   id: '/token',
   path: '/token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackingRoute = TrackingRouteImport.update({
+  id: '/tracking',
+  path: '/tracking',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -39,34 +51,49 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/dashboard': typeof DashboardRoute
+  '/staff': typeof StaffRoute
   '/token': typeof TokenRoute
+  '/tracking': typeof TrackingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/dashboard': typeof DashboardRoute
+  '/staff': typeof StaffRoute
   '/token': typeof TokenRoute
+  '/tracking': typeof TrackingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/dashboard': typeof DashboardRoute
+  '/staff': typeof StaffRoute
   '/token': typeof TokenRoute
+  '/tracking': typeof TrackingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/book' | '/dashboard' | '/token'
+  fullPaths: '/' | '/book' | '/dashboard' | '/staff' | '/token' | '/tracking'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/book' | '/dashboard' | '/token'
-  id: '__root__' | '/' | '/book' | '/dashboard' | '/token'
+  to: '/' | '/book' | '/dashboard' | '/staff' | '/token' | '/tracking'
+  id:
+    | '__root__'
+    | '/'
+    | '/book'
+    | '/dashboard'
+    | '/staff'
+    | '/token'
+    | '/tracking'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BookRoute: typeof BookRoute
   DashboardRoute: typeof DashboardRoute
+  StaffRoute: typeof StaffRoute
   TokenRoute: typeof TokenRoute
+  TrackingRoute: typeof TrackingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,11 +119,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/staff': {
+      id: '/staff'
+      path: '/staff'
+      fullPath: '/staff'
+      preLoaderRoute: typeof StaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/token': {
       id: '/token'
       path: '/token'
       fullPath: '/token'
       preLoaderRoute: typeof TokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tracking': {
+      id: '/tracking'
+      path: '/tracking'
+      fullPath: '/tracking'
+      preLoaderRoute: typeof TrackingRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -106,7 +147,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BookRoute: BookRoute,
   DashboardRoute: DashboardRoute,
+  StaffRoute: StaffRoute,
   TokenRoute: TokenRoute,
+  TrackingRoute: TrackingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
